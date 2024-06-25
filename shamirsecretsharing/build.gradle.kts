@@ -53,10 +53,19 @@ android {
             path = file("src/main/cpp/CMakeLists.txt")
         }
     }
+    lint {
+        abortOnError = true
+    }
+    publishing {
+        singleVariant("release") {
+//            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
 
     testImplementation("junit:junit:4.13.2")
 //    androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -111,14 +120,14 @@ publishing {
         }
 
         repositories {
-            //:omemo:publishReleaseToMyRepoRepository
+            //:shamirsecretsharing:publishReleaseToMyRepoRepository
             maven {
                 name = "MyRepo"
                 val releasesRepoUrl = layout.buildDirectory.dir("repos/releases")
                 val snapshotsRepoUrl = layout.buildDirectory.dir("repos/snapshots")
                 url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
             }
-            // :omemo:publishReleaseToSonatypeRepository
+            // :shamirsecretsharing:publishReleaseToSonatypeRepository
             maven {
                 name = "sonatype"
                 val releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
